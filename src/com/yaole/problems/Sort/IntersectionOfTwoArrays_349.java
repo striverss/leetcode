@@ -11,23 +11,27 @@ public class IntersectionOfTwoArrays_349 {
      */
     public static int[] intersection(int[] nums1, int[] nums2) {
         if (nums1 == null || nums2 == null) return null;
-        Arrays.sort(nums1);
-        Set<Integer> set = new HashSet<>();
-        for (int num : nums2) {
-            if (Arrays.binarySearch(nums1, num) >= 0) set.add(num);
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums1.length; i++) {
+            set.add(nums1[i]);
         }
-        int[] result = new int[set.size()];
-        Iterator<Integer> iterator = set.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            result[i++] = iterator.next();
+        ArrayList<Integer> resultList = new ArrayList<>();
+        for (int i = 0; i < nums2.length; i++) {
+            if (set.contains(nums2[i])) {
+                resultList.add(nums2[i]);
+                set.remove(nums2[i]);
+            }
+        }
+        int[] result = new int[resultList.size()];
+        for (int i = 0; i < resultList.size(); i++) {
+            result[i] = resultList.get(i);
         }
         return result;
     }
 
     public static void main(String[] args) {
-        int[] nums1 = {1,2,2,1};
-        int[] nums2 = {2,2};
+        int[] nums1 = {4,9,5};
+        int[] nums2 = {9,4,9,8,4};
         System.out.println(Arrays.toString(intersection(nums1, nums2)));
     }
 }
